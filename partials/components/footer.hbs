@@ -1,0 +1,24 @@
+<footer class="gh-footer{{#match @custom.header_and_footer_color "Accent color"}} has-accent-color{{/match}} gh-outer">
+    <div class="gh-footer-inner">
+
+        <div class="gh-footer-bar">
+            <nav class="gh-footer-menu">
+                {{navigation type="secondary"}}
+            </nav>
+            <span class="gh-footer-logo is-title">
+                {{#if @site.logo}}
+                    <img src="{{@site.logo}}" alt="{{@site.title}}">
+                {{else}}
+                    {{@site.title}}
+                {{/if}}
+            </span>
+            <div class="gh-footer-copyright">
+                {{@site.title}}<br>
+                &copy; {{date format="YYYY"}} | Alle Rechte vorbehalten
+            </div>
+
+            {{> "components/social-icons"}}
+        </div>
+
+    </div>
+</footer>

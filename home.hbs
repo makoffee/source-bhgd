@@ -1,0 +1,44 @@
+{{!< default}}
+{{!--
+    Single-page landing template.
+    Each .home-section maps to a nav anchor (#mission, #werte, etc.).
+    Navigation smooth-scroll is handled in assets/js/main.js.
+
+    Content source:
+        mission, standards, nachhaltigkeit, mitglieder
+            → Ghost pages with matching slugs (e.g. "mission-block")
+        werte
+            → posts tagged #werte (via components/tag-grid)
+        featured row
+            → last 3 featured posts (via components/featured-grid)
+--}}
+
+{{> "components/header" headerStyle=@custom.header_style}}
+
+<main class="gh-main home-landing">
+
+    <section class="home-section" id="mission">
+        {{> "components/landing-section" slug="mission-block"}}
+    </section>
+
+    <section class="home-section" id="werte">
+        {{!-- Heading lives here (outside #get) so Handlebars scope doesn't swallow it --}}
+        <h2 class="home-section-heading-kg is-title gh-outer">Verbindlichkeit, Ethik und Transparenz</h2>
+        {{> "components/tag-grid" tag="werte" limit="3"}}
+    </section>
+
+    <section class="home-section" id="standards">
+        {{> "components/landing-section" slug="standards-block"}}
+    </section>
+
+    <section class="home-section" id="nachhaltigkeit">
+        {{> "components/landing-section" slug="nachhaltigkeit-block"}}
+    </section>
+
+    <section class="home-section" id="mitglieder">
+        {{> "components/landing-section" slug="mitglieder-block"}}
+    </section>
+
+    {{> "components/featured-grid" limit="3"}}
+
+</main>

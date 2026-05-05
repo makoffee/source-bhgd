@@ -1,0 +1,21 @@
+{{!--
+    Parameters:
+    * title (string)
+    * limit (number)
+--}}
+
+{{#get "posts" filter="featured:true" include="authors" limit=limit as |featured|}}
+    {{#if featured}}
+        <section class="gh-container is-grid gh-outer home-featured-row">
+            <div class="gh-container-inner gh-inner">
+                <h2 class="gh-container-title">{{#if title}}{{title}}{{else}}{{t "Featured"}}{{/if}}</h2>
+                <div class="gh-feed">
+                    {{#foreach featured}}
+                        {{> "post-card" lazyLoad=true}}
+                    {{/foreach}}
+                </div>
+            </div>
+        </section>
+    {{/if}}
+{{/get}}
+

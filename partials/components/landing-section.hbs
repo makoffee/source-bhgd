@@ -1,0 +1,18 @@
+{{!--
+    Landing page content block.
+    Fetches a single Ghost page by slug and renders its Koenig content
+    as a full-canvas block within the single-page scroller.
+
+    Parameters:
+        * slug — Ghost page slug (e.g. "mission-block")
+
+    Usage:
+        {{> "components/landing-section" slug="mission-block"}}
+--}}
+{{#get "pages" filter="slug:{{slug}}" limit="1"}}
+    {{#foreach pages}}
+        <section class="gh-content gh-canvas is-body">
+            {{content}}
+        </section>
+    {{/foreach}}
+{{/get}}

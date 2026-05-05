@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Built assets (compiled by Gulp from assets/css and assets/js)
+# Uncomment these if you want to keep built files out of version control.
+# When deploying via Ghost Admin UI, you MUST keep built files tracked.
+# assets/built/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Yarn
+.yarn-integrity
+yarn.lock
+
+# Environment
+.env
+.env.local

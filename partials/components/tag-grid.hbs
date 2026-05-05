@@ -1,0 +1,25 @@
+{{!--
+    Tag Card Grid — displays a grid of dark-style content cards filtered by tag.
+    Uses the dark-card (post-card-dark) partial: image + title + full text, no links.
+
+    Parameters:
+        * tag     — Ghost tag slug to filter by (required, e.g. "werte")
+        * limit   — number of cards to show (default: 3)
+        * heading — section heading text (optional)
+
+    Usage in home.hbs:
+        {{> "components/tag-grid" tag="werte" limit="3" heading="Your Section Heading"}}
+--}}
+{{#get "posts" filter="tags:[{{tag}},hash-{{tag}}]" limit=limit order="published_at desc" as |tagPosts|}}
+    {{#if tagPosts}}
+        <section class="gh-container is-grid gh-outer home-featured-row home-tag-grid">
+            <div class="gh-container-inner gh-inner">
+                <div class="gh-feed">
+                    {{#foreach tagPosts}}
+                        {{> "post-card-dark" lazyLoad=true}}
+                    {{/foreach}}
+                </div>
+            </div>
+        </section>
+    {{/if}}
+{{/get}}
