@@ -1,0 +1,32 @@
+---
+description: Ghost theme editing conventions for source-bhgd. Prevents destructive edits and enforces safe patterns.
+alwaysApply: true
+---
+
+# source-bhgd Ghost Theme — Editing Rules
+
+## CSS Editing — STRICT
+
+- **NEVER** use Python scripts, `sed`, `awk`, or any bulk find-and-replace on CSS files.
+- **ALWAYS** use `StrReplace` for targeted edits on known, verified sections only.
+- **ALWAYS** read the relevant CSS section with the `Read` tool before making any edit.
+- Custom styles live at the bottom of `assets/css/screen.css` under `/* HOME CUSTOM OVERRIDES */`. Do not touch the base theme CSS above that section.
+
+## HBS Templates — STRICT
+
+- **ALWAYS** read the full file before editing any `.hbs` template.
+- **NEVER** rename or refactor class names across multiple files in one operation without first grepping every file that references the old name.
+- When renaming a CSS class, update CSS and ALL HBS/JS references in the same change, verified by `grep` before and after.
+
+## Git — REQUIRED
+
+- Before making any non-trivial change, confirm the working tree is clean (`git status`).
+- After a confirmed-working state, remind the user to commit.
+- Never make bulk changes across more than 2 files without a git checkpoint first.
+
+## General
+
+- No inline styles in `.hbs` templates. All styles go in `assets/css/screen.css`.
+- No JS style injection. Use CSS classes toggled by JS instead.
+- `old_components/` is read-only — never reference or modify it.
+- The CSS class prefix for this theme is `home-`. Never introduce `bhgd-` prefixes in new code.
