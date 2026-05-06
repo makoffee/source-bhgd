@@ -1,6 +1,10 @@
 /* Signal that JS is active — gates scroll-reveal CSS hidden states */
 document.documentElement.classList.add('js-reveal-ready');
 
+/* Shared flag: true while a nav-link smooth-scroll is in progress.
+   Read by the Intersection Observer to defer reveals until scroll settles. */
+var homeNavScrolling = false;
+
 /* Mobile menu burger toggle */
 (function () {
     const navigation = document.querySelector('.gh-navigation');
@@ -121,7 +125,19 @@ document.documentElement.classList.add('js-reveal-ready');
         e.preventDefault();
         closeMobileMenuIfOpen();
         history.pushState(null, '', url.hash);
+        homeNavScrolling = true;
     });
+
+    /* Clear homeNavScrolling 150ms after the last scroll event fires.
+       Only active while a nav-scroll is in progress — zero cost otherwise. */
+    var _navScrollEndTimer;
+    window.addEventListener('scroll', function () {
+        if (!homeNavScrolling) return;
+        clearTimeout(_navScrollEndTimer);
+        _navScrollEndTimer = setTimeout(function () {
+            homeNavScrolling = false;
+        }, 150);
+    }, {passive: true});
 
     window.addEventListener('hashchange', function () {
         scrollToHash(window.location.hash, 'smooth');
@@ -162,9 +178,21 @@ document.documentElement.classList.add('js-reveal-ready');
 
     var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-revealed');
-                observer.unobserve(entry.target);
+            if (!entry.isIntersecting) return;
+            var el = entry.target;
+            observer.unobserve(el);
+
+            if (homeNavScrolling) {
+                /* Defer reveal until nav-scroll finishes, then reveal */
+                (function waitAndReveal() {
+                    if (homeNavScrolling) {
+                        setTimeout(waitAndReveal, 80);
+                    } else {
+                        el.classList.add('is-revealed');
+                    }
+                }());
+            } else {
+                el.classList.add('is-revealed');
             }
         });
     }, {
