@@ -136,7 +136,7 @@ var homeNavScrolling = false;
         clearTimeout(_navScrollEndTimer);
         _navScrollEndTimer = setTimeout(function () {
             homeNavScrolling = false;
-        }, 150);
+        }, 80);
     }, {passive: true});
 
     window.addEventListener('hashchange', function () {
@@ -186,7 +186,7 @@ var homeNavScrolling = false;
                 /* Defer reveal until nav-scroll finishes, then reveal */
                 (function waitAndReveal() {
                     if (homeNavScrolling) {
-                        setTimeout(waitAndReveal, 80);
+                        setTimeout(waitAndReveal, 40);
                     } else {
                         el.classList.add('is-revealed');
                     }
