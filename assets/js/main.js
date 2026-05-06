@@ -135,15 +135,29 @@ document.documentElement.classList.add('js-reveal-ready');
 })();
 
 /* Scroll reveal — Intersection Observer
-   Observes .home-section and .gh-article-image (single elements) and
-   .gh-feed (card grids, children stagger via CSS nth-child delays).
-   Fires once per element then disconnects the observation. */
+   Fires once per element, then stops observing.
+   CSS handles hidden state (gated on .js-reveal-ready) and stagger delays.
+
+   Targets:
+     Landing page only: hero, KG header cards, werte h2, dark card grid
+     Site-wide: post/page feature image */
 (function () {
     if (!('IntersectionObserver' in window)) return;
 
-    var targets = document.querySelectorAll(
-        '.gh-article-image, .gh-feed'
-    );
+    var selectors = [
+        '.gh-article-image',            // post/page feature image (site-wide)
+        '.home-tag-grid .gh-feed',      // werte dark cards (stagger via CSS)
+        '.home-section-heading-kg',     // werte section heading
+    ];
+
+    if (document.body.classList.contains('home-template')) {
+        selectors.push(
+            '.gh-header',                       // hero (h1, subtitle, CTA)
+            '.home-landing .kg-header-card'     // all KG content blocks
+        );
+    }
+
+    var targets = document.querySelectorAll(selectors.join(', '));
     if (!targets.length) return;
 
     var observer = new IntersectionObserver(function (entries) {

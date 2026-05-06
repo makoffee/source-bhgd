@@ -4307,15 +4307,141 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* ─── Scroll-reveal animations ───────────────────────────────────────────────
-   Gated on .js-reveal-ready (added to <html> by main.js) so elements are
-   always visible when JS is absent or prefers-reduced-motion is set.
+   Gated on .js-reveal-ready (added to <html> by main.js) so content is
+   always visible without JS and prefers-reduced-motion is fully respected.
+
+   Strategy:
+     Hero (.gh-header, outside .home-landing) → scoped via .home-template
+     Split KG cards → children animate individually with stagger
+     Full-width KG cards → whole card fades in (covers background + text)
+     Werte heading → single element fade-up
+     Dark card grid → children stagger (werte section only, not featured posts)
+     Post feature image → single element fade-up (site-wide)
    ─────────────────────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: no-preference) {
 
-    /* Feature image on single posts/pages */
+    /* ── Shared easing shorthand ──────────────────────────────────────────── */
+    /* (used as a base; overridden per-element below for delays)              */
+
+    /* ── Hero — h1, subtitle, CTA button ─────────────────────────────────── */
+    .js-reveal-ready .home-template .gh-header .gh-header-title,
+    .js-reveal-ready .home-template .gh-header .home-hero-subtitle,
+    .js-reveal-ready .home-template .gh-header .home-hero-actions {
+        opacity: 0;
+        transform: translateY(16px);
+        transition:
+            opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: opacity, transform;
+    }
+
+    .js-reveal-ready .home-template .gh-header.is-revealed .gh-header-title {
+        opacity: 1;
+        transform: none;
+    }
+
+    .js-reveal-ready .home-template .gh-header.is-revealed .home-hero-subtitle {
+        opacity: 1;
+        transform: none;
+        transition-delay: 120ms;
+    }
+
+    .js-reveal-ready .home-template .gh-header.is-revealed .home-hero-actions {
+        opacity: 1;
+        transform: none;
+        transition-delay: 240ms;
+    }
+
+    /* ── Split KG cards (mission, nachhaltigkeit) ─────────────────────────
+       Children animate individually: image → heading → subtext → buttons   */
+    .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-image,
+    .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-heading,
+    .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-subheading,
+    .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-buttons {
+        opacity: 0;
+        transform: translateY(16px);
+        transition:
+            opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: opacity, transform;
+    }
+
+    .js-reveal-ready .home-landing .kg-layout-split.is-revealed .kg-header-card-image {
+        opacity: 1;
+        transform: none;
+    }
+
+    .js-reveal-ready .home-landing .kg-layout-split.is-revealed .kg-header-card-heading {
+        opacity: 1;
+        transform: none;
+        transition-delay: 100ms;
+    }
+
+    .js-reveal-ready .home-landing .kg-layout-split.is-revealed .kg-header-card-subheading {
+        opacity: 1;
+        transform: none;
+        transition-delay: 200ms;
+    }
+
+    .js-reveal-ready .home-landing .kg-layout-split.is-revealed .kg-header-card-buttons {
+        opacity: 1;
+        transform: none;
+        transition-delay: 300ms;
+    }
+
+    /* ── Full-width KG cards (standards, mitglieder) ──────────────────────
+       Fade in as a single unit — covers both background-image cards and
+       text-only cards. Children inherit the card's opacity, no double-fade. */
+    .js-reveal-ready .home-landing .kg-header-card.kg-width-full:not(.kg-layout-split) {
+        opacity: 0;
+        transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: opacity;
+    }
+
+    .js-reveal-ready .home-landing .kg-header-card.kg-width-full:not(.kg-layout-split).is-revealed {
+        opacity: 1;
+        will-change: auto;
+    }
+
+    /* ── Werte section heading ────────────────────────────────────────────── */
+    .js-reveal-ready .home-section-heading-kg {
+        opacity: 0;
+        transform: translateY(16px);
+        transition:
+            opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: opacity, transform;
+    }
+
+    .js-reveal-ready .home-section-heading-kg.is-revealed {
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+    }
+
+    /* ── Dark card grid stagger — werte section only, not featured posts ─── */
+    .js-reveal-ready .home-tag-grid .gh-feed > .gh-card {
+        opacity: 0;
+        transform: translateY(16px);
+        transition:
+            opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: opacity, transform;
+    }
+
+    .js-reveal-ready .home-tag-grid .gh-feed.is-revealed > .gh-card {
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+    }
+
+    .js-reveal-ready .home-tag-grid .gh-feed.is-revealed > .gh-card:nth-child(2) { transition-delay: 100ms; }
+    .js-reveal-ready .home-tag-grid .gh-feed.is-revealed > .gh-card:nth-child(3) { transition-delay: 200ms; }
+
+    /* ── Post / page feature image (site-wide) ───────────────────────────── */
     .js-reveal-ready .gh-article-image {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(16px);
         transition:
             opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
             transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
@@ -4327,26 +4453,5 @@ h1, h2, h3, h4, h5, h6,
         transform: none;
         will-change: auto;
     }
-
-    /* Card grids — hide children, reveal with stagger */
-    .js-reveal-ready .gh-feed > .gh-card {
-        opacity: 0;
-        transform: translateY(20px);
-        transition:
-            opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
-            transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: opacity, transform;
-    }
-
-    .js-reveal-ready .gh-feed.is-revealed > .gh-card {
-        opacity: 1;
-        transform: none;
-        will-change: auto;
-    }
-
-    .js-reveal-ready .gh-feed.is-revealed > .gh-card:nth-child(2) { transition-delay: 100ms; }
-    .js-reveal-ready .gh-feed.is-revealed > .gh-card:nth-child(3) { transition-delay: 200ms; }
-    .js-reveal-ready .gh-feed.is-revealed > .gh-card:nth-child(4) { transition-delay: 300ms; }
-    .js-reveal-ready .gh-feed.is-revealed > .gh-card:nth-child(n+5) { transition-delay: 400ms; }
 
 }
