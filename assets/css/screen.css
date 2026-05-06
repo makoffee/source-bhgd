@@ -4353,8 +4353,9 @@ h1, h2, h3, h4, h5, h6,
     }
 
     /* ── Split KG cards (mission, nachhaltigkeit) ─────────────────────────
-       Children animate individually: image → heading → subtext → buttons   */
-    .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-image,
+       Children animate individually: image → heading → subtext → buttons
+       The image rules use !important to override earlier "force-visible"
+       rules that were added to fix image visibility at certain breakpoints. */
     .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-heading,
     .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-subheading,
     .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-buttons {
@@ -4366,9 +4367,18 @@ h1, h2, h3, h4, h5, h6,
         will-change: opacity, transform;
     }
 
-    .js-reveal-ready .home-landing .kg-layout-split.is-revealed .kg-header-card-image {
-        opacity: 1;
-        transform: none;
+    .js-reveal-ready .home-landing .kg-layout-split :is(.kg-header-card-image, .kg-header-card-media) {
+        opacity: 0 !important;
+        transform: translateY(16px) !important;
+        transition:
+            opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.65s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        will-change: opacity, transform;
+    }
+
+    .js-reveal-ready .home-landing .kg-layout-split.is-revealed :is(.kg-header-card-image, .kg-header-card-media) {
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     .js-reveal-ready .home-landing .kg-layout-split.is-revealed .kg-header-card-heading {
