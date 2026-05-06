@@ -4305,3 +4305,48 @@ h1, h2, h3, h4, h5, h6,
     resize: vertical;
     min-height: 140px;
 }
+
+/* ─── Scroll-reveal animations ───────────────────────────────────────────────
+   Gated on .js-reveal-ready (added to <html> by main.js) so elements are
+   always visible when JS is absent or prefers-reduced-motion is set.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+
+    /* Feature image on single posts/pages */
+    .js-reveal-ready .gh-article-image {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+            opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: opacity, transform;
+    }
+
+    .js-reveal-ready .gh-article-image.is-revealed {
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+    }
+
+    /* Card grids — hide children, reveal with stagger */
+    .js-reveal-ready .gh-feed > .gh-card {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+            opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: opacity, transform;
+    }
+
+    .js-reveal-ready .gh-feed.is-revealed > .gh-card {
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+    }
+
+    .js-reveal-ready .gh-feed.is-revealed > .gh-card:nth-child(2) { transition-delay: 100ms; }
+    .js-reveal-ready .gh-feed.is-revealed > .gh-card:nth-child(3) { transition-delay: 200ms; }
+    .js-reveal-ready .gh-feed.is-revealed > .gh-card:nth-child(4) { transition-delay: 300ms; }
+    .js-reveal-ready .gh-feed.is-revealed > .gh-card:nth-child(n+5) { transition-delay: 400ms; }
+
+}

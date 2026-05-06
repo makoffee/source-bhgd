@@ -1,3 +1,6 @@
+/* Signal that JS is active — gates scroll-reveal CSS hidden states */
+document.documentElement.classList.add('js-reveal-ready');
+
 /* Mobile menu burger toggle */
 (function () {
     const navigation = document.querySelector('.gh-navigation');
@@ -129,6 +132,33 @@
             scrollToHash(window.location.hash, 'smooth');
         });
     }
+})();
+
+/* Scroll reveal — Intersection Observer
+   Observes .home-section and .gh-article-image (single elements) and
+   .gh-feed (card grids, children stagger via CSS nth-child delays).
+   Fires once per element then disconnects the observation. */
+(function () {
+    if (!('IntersectionObserver' in window)) return;
+
+    var targets = document.querySelectorAll(
+        '.gh-article-image, .gh-feed'
+    );
+    if (!targets.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.08,
+        rootMargin: '0px 0px -48px 0px'
+    });
+
+    targets.forEach(function (el) { observer.observe(el); });
 })();
 
 /* Hero video: hide image fallback when video is ready to play */
