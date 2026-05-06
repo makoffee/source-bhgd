@@ -4320,36 +4320,30 @@ h1, h2, h3, h4, h5, h6,
    ─────────────────────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: no-preference) {
 
-    /* ── Shared easing shorthand ──────────────────────────────────────────── */
-    /* (used as a base; overridden per-element below for delays)              */
+    /* ── Keyframe used by hero and any other load-time reveals ───────────── */
+    @keyframes home-reveal-up {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: none; }
+    }
 
-    /* ── Hero — h1, subtitle, CTA button ─────────────────────────────────── */
-    .js-reveal-ready .home-template .gh-header .gh-header-title,
-    .js-reveal-ready .home-template .gh-header .home-hero-subtitle,
+    /* ── Hero — driven by CSS animation (not IntersectionObserver) ────────
+       Keyframe animations fire on the browser's own paint cycle so there
+       is no JS timing race when the element is already in the viewport.
+       animation-fill-mode: both keeps elements hidden before the delay
+       and visible after the animation without any extra class toggling.  */
+    .js-reveal-ready .home-template .gh-header .gh-header-title {
+        animation: home-reveal-up 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
+        animation-delay: 150ms;
+    }
+
+    .js-reveal-ready .home-template .gh-header .home-hero-subtitle {
+        animation: home-reveal-up 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
+        animation-delay: 270ms;
+    }
+
     .js-reveal-ready .home-template .gh-header .home-hero-actions {
-        opacity: 0;
-        transform: translateY(16px);
-        transition:
-            opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
-            transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: opacity, transform;
-    }
-
-    .js-reveal-ready .home-template .gh-header.is-revealed .gh-header-title {
-        opacity: 1;
-        transform: none;
-    }
-
-    .js-reveal-ready .home-template .gh-header.is-revealed .home-hero-subtitle {
-        opacity: 1;
-        transform: none;
-        transition-delay: 120ms;
-    }
-
-    .js-reveal-ready .home-template .gh-header.is-revealed .home-hero-actions {
-        opacity: 1;
-        transform: none;
-        transition-delay: 240ms;
+        animation: home-reveal-up 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
+        animation-delay: 390ms;
     }
 
     /* ── Split KG cards (mission, nachhaltigkeit) ─────────────────────────

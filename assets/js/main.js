@@ -168,7 +168,6 @@ var homeNavScrolling = false;
 
     if (document.body.classList.contains('home-template')) {
         selectors.push(
-            '.gh-header',                       // hero (h1, subtitle, CTA)
             '.home-landing .kg-header-card'     // all KG content blocks
         );
     }
