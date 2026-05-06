@@ -4358,7 +4358,7 @@ h1, h2, h3, h4, h5, h6,
        rules that were added to fix image visibility at certain breakpoints. */
     .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-heading,
     .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-subheading,
-    .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-buttons {
+    .js-reveal-ready .home-landing .kg-layout-split .kg-header-card-button {
         opacity: 0;
         transform: translateY(16px);
         transition:
@@ -4393,7 +4393,7 @@ h1, h2, h3, h4, h5, h6,
         transition-delay: 200ms;
     }
 
-    .js-reveal-ready .home-landing .kg-layout-split.is-revealed .kg-header-card-buttons {
+    .js-reveal-ready .home-landing .kg-layout-split.is-revealed .kg-header-card-button {
         opacity: 1;
         transform: none;
         transition-delay: 300ms;
@@ -4411,7 +4411,7 @@ h1, h2, h3, h4, h5, h6,
 
     .js-reveal-ready .home-landing .kg-header-card.kg-width-full:not(.kg-layout-split) .kg-header-card-heading,
     .js-reveal-ready .home-landing .kg-header-card.kg-width-full:not(.kg-layout-split) .kg-header-card-subheading,
-    .js-reveal-ready .home-landing .kg-header-card.kg-width-full:not(.kg-layout-split) .kg-header-card-buttons {
+    .js-reveal-ready .home-landing .kg-header-card.kg-width-full:not(.kg-layout-split) .kg-header-card-button {
         opacity: 0;
         transform: translateY(12px);
         transition:
@@ -4437,7 +4437,7 @@ h1, h2, h3, h4, h5, h6,
         transition-delay: 480ms;
     }
 
-    .js-reveal-ready .home-landing .kg-header-card.kg-width-full:not(.kg-layout-split).is-revealed .kg-header-card-buttons {
+    .js-reveal-ready .home-landing .kg-header-card.kg-width-full:not(.kg-layout-split).is-revealed .kg-header-card-button {
         opacity: 1;
         transform: none;
         transition-delay: 610ms;
