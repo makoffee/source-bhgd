@@ -4306,6 +4306,32 @@ h1, h2, h3, h4, h5, h6,
     min-height: 140px;
 }
 
+/* Formspree — consent row (replaces inline styles in HTML block) */
+.fs-consent {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: -4px;
+    margin-bottom: 4px;
+}
+
+.fs-consent-input {
+    width: 16px;
+    height: 16px;
+    margin: 3px 0 0;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.fs-consent-label {
+    font-size: 1.4rem;
+    font-weight: 400;
+    cursor: pointer;
+    line-height: 1.35;
+    margin: 0;
+}
+
 /* ─── Scroll-reveal animations ───────────────────────────────────────────────
    Gated on .js-reveal-ready (added to <html> by main.js) so content is
    always visible without JS and prefers-reduced-motion is fully respected.
