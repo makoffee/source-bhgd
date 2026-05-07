@@ -4029,6 +4029,51 @@ h1, h2, h3, h4, h5, h6,
     padding-block: clamp(40px, 6vmin, 96px);
 }
 
+/* KG header card readability (image background style)
+   This style typically uses a CSS background-image, so use blend-mode. */
+.gh-content :is(.kg-card.kg-header-card, .kg-header-card.kg-v2).kg-style-image:not(.kg-layout-split) .kg-header-card-content {
+    background-color: rgba(0, 0, 0, 0.30);
+    background-blend-mode: multiply;
+}
+
+/* If the header card uses a real <picture>/<img> behind the text (v2 regular/wide),
+   darken the media layer for contrast. (Some Ghost versions put the
+   kg-header-card-image class on the wrapper; others on the img itself.) */
+.gh-content .kg-card.kg-header-card.kg-v2:not(.kg-layout-split):not(.kg-width-full)
+:is(
+    .kg-header-card-image,
+    .kg-header-card-media,
+    img.kg-header-card-image,
+    picture.kg-header-card-image,
+    video.kg-header-card-media
+) {
+    filter: brightness(72%) !important;
+}
+
+.gh-content .kg-card.kg-header-card.kg-v2:not(.kg-layout-split):not(.kg-width-full)
+:is(.kg-header-card-image, .kg-header-card-media) :is(img, picture, video) {
+    filter: brightness(72%) !important;
+}
+
+/* KG header cards — rounded corners for wide/standard widths
+   Full-width banners should remain square; split layouts have their own
+   rounded image rules. */
+.gh-content :is(.kg-card.kg-header-card, .kg-header-card.kg-v2):not(.kg-width-full):not(.kg-layout-split) {
+    border-radius: var(--home-card-radius);
+    overflow: hidden;
+}
+
+.gh-content :is(.kg-card.kg-header-card, .kg-header-card.kg-v2):not(.kg-width-full):not(.kg-layout-split)
+:is(.kg-header-card-image, .kg-header-card-media) {
+    border-radius: var(--home-card-radius);
+    overflow: hidden;
+}
+
+.gh-content :is(.kg-card.kg-header-card, .kg-header-card.kg-v2):not(.kg-width-full):not(.kg-layout-split)
+:is(.kg-header-card-image, .kg-header-card-media) :is(img, picture, video) {
+    border-radius: var(--home-card-radius);
+}
+
 @media (min-width: 992px) {
     .home-template .gh-content .kg-card.kg-header-card,
     .home-template .gh-content .kg-header-card.kg-v2 {
@@ -4049,22 +4094,15 @@ h1, h2, h3, h4, h5, h6,
     --home-outer-gutter: max(4vmin, 20px);
 }
 
-.home-template .gh-content .kg-card.kg-width-full:not(
-    .kg-image-card,
-    .kg-gallery-card,
-    .kg-video-card,
-    .kg-audio-card,
-    .kg-embed-card,
-    .kg-file-card,
-    .kg-product-card,
-    .kg-bookmark-card
+/* Universal KG header card gutter (Option A)
+   Apply the same inner alignment to KG header cards on all pages,
+   without affecting other Koenig card types. */
+.gh-content :is(
+    .kg-card.kg-header-card,
+    .kg-header-card.kg-v2
 ) {
     padding-inline: var(--home-outer-gutter);
     box-sizing: border-box;
-}
-
-.home-template .gh-content .kg-card.kg-header-card.kg-width-full .kg-header-card-content {
-    padding-inline: 0;
 }
 
 /* -----------------------------------------------------------
@@ -4305,7 +4343,7 @@ h1, h2, h3, h4, h5, h6,
 .fs-form select {
     display: block;
     width: 100%;
-    padding: 10px 16px;
+    padding: 10px 44px 10px 16px;
     font-family: var(--font-sans);
     font-size: 1.5rem;
     line-height: 1.5;
