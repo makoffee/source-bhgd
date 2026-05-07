@@ -3389,7 +3389,7 @@ html {
 }
 
 :root {
-    --home-nav-height: 100px;
+    --home-nav-height: 64px;
     --home-nav-glass-bg: rgba(255, 255, 255, 0.78);
     --home-nav-glass-border: rgba(0, 0, 0, 0.08);
     --home-nav-glass-blur: 14px;
@@ -4299,6 +4299,28 @@ h1, h2, h3, h4, h5, h6,
 
 .fs-form .gh-input::placeholder {
     color: var(--color-secondary-text);
+}
+
+/* Native select styling — match .gh-input without removing the browser chevron */
+.fs-form select {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: var(--color-primary-text);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-light-gray);
+    border-radius: 6px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    box-sizing: border-box;
+}
+
+.fs-form select:focus {
+    outline: none;
+    border-color: var(--ghost-accent-color, var(--color-darker-gray));
+    box-shadow: 0 0 0 3px var(--color-lighter-gray);
 }
 
 .fs-form textarea.gh-input {
